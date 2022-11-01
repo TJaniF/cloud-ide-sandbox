@@ -1,0 +1,41 @@
+name: Astronomer CI - Deploy Code (Multiple Branches)
+
+on:
+  push:
+    branches: [dev, main]
+
+jobs:
+  dev-push:
+    if: github.ref == 'refs/heads/dev'
+    env:
+      ## Sets DEV Deployment API key credentials as environment variables
+      ASTRONOMER_KEY_ID: ${{ secrets.DEV_ASTRONOMER_KEY_ID }}
+      ASTRONOMER_KEY_SECRET: ${{ secrets.DEV_ASTRONOMER_KEY_SECRET }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Homebrew
+      id: set-up-homebrew
+      uses: Homebrew/actions/setup-homebrew@master
+    - name: checkout repo
+      uses: actions/checkout@v2.3.4
+    - name: Deploy to Astro
+      run: |
+        brew install astronomer/cloud/astrocloud
+        astrocloud deploy ${{ secrets.DEV_ASTRONOMER_DEPLOYMENT_ID }} -f
+  prod-push:
+    if: github.ref == 'refs/heads/main'
+    env:
+      ## Sets PROD Deployment API key credentials as environment variables
+      ASTRONOMER_KEY_ID: ${{ secrets.PROD_ASTRONOMER_KEY_ID }}
+      ASTRONOMER_KEY_SECRET: ${{ secrets.PROD_ASTRONOMER_KEY_SECRET }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Homebrew
+      id: set-up-homebrew
+      uses: Homebrew/actions/setup-homebrew@master
+    - name: checkout repo
+      uses: actions/checkout@v2.3.4
+    - name: Deploy to Astro
+      run: |
+        brew install astronomer/cloud/astrocloud
+        astrocloud deploy ${{ secrets.PROD_ASTRONOMER_DEPLOYMENT_ID }} -f
