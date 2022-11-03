@@ -19,7 +19,7 @@ def model_task_func(transform_table: pd.DataFrame):
     # use the table returned from the transform_table cell
     df = transform_table
     
-    # calculate the baseline accuracy
+    # calculate baseline accuracy
     baseline_accuracy = df.iloc[:,-1].value_counts(normalize=True)[0]
     
     # selecting predictors (X) and the target (y)
