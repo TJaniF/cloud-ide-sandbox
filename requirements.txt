@@ -1,2 +1,3 @@
 astro-sdk-python[postgres,snowflake,amazon]
 pandas
+scikit-learn
