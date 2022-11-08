@@ -68,7 +68,7 @@ FROM {{query_table}}"""
     schedule_interval=None,
     start_date=pendulum.from_format("2022-11-03", "YYYY-MM-DD"),
 )
-def dog_smarts_pipeline():
+def dog_intelligence():
     query_table = query_table_func()
 
     transform_table = transform_table_func(
@@ -83,4 +83,4 @@ def dog_smarts_pipeline():
 
     transform_table << query_table
 
-dag_obj = dog_smarts_pipeline()
+dag_obj = dog_intelligence()
