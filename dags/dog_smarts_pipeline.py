@@ -52,13 +52,13 @@ def model_task_func(transform_table: pd.DataFrame):
 def query_table_func():
     return """-- Write your SQL query here
 SELECT * FROM SANDBOX.TAMARAFINGERLIN.DOG_INTELLIGENCE 
-WHERE CONCAT(BREED, HEIGHT_LOW_INCHES, HEIGHT_HIGHT_INCHES, 
+WHERE CONCAT(BREED, HEIGHT_LOW_INCHES, HEIGHT_HIGH_INCHES, 
 WEIGHT_LOW_LBS, WEIGHT_HIGH_LBS, REPS_UPPER, REPS_LOWER) IS NOT NULL"""
 
 @aql.transform(conn_id="snowflake_conn", task_id="transform_table")
 def transform_table_func(query_table: Table):
     return """-- Write your SQL query here
-SELECT HEIGHT_LOW_INCHES, HEIGHT_HIGHT_INCHES, WEIGHT_LOW_LBS, WEIGHT_HIGH_LBS,
+SELECT HEIGHT_LOW_INCHES, HEIGHT_HIGH_INCHES, WEIGHT_LOW_LBS, WEIGHT_HIGH_LBS,
     CASE WHEN reps_upper <= 25 THEN 'very_smart_dog'
     ELSE 'smart_dog'
     END AS INTELLIGENCE_CATEGORY
